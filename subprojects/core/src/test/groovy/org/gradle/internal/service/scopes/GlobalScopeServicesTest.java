@@ -32,7 +32,7 @@ import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.internal.file.IdentityFileResolver;
 import org.gradle.api.internal.initialization.loadercache.ClassLoaderCache;
 import org.gradle.api.internal.initialization.loadercache.DefaultClassLoaderCache;
-import org.gradle.api.internal.initialization.loadercache.HashClassPathSnapshotter;
+import org.gradle.api.internal.initialization.loadercache.DefaultClasspathHasher;
 import org.gradle.cache.internal.CacheFactory;
 import org.gradle.cache.internal.DefaultCacheFactory;
 import org.gradle.cache.internal.DefaultFileLockManager;
@@ -46,7 +46,7 @@ import org.gradle.initialization.GradleLauncherFactory;
 import org.gradle.internal.time.TimeProvider;
 import org.gradle.internal.time.TrueTimeProvider;
 import org.gradle.internal.classloader.ClassLoaderFactory;
-import org.gradle.internal.classloader.ClassPathSnapshotter;
+import org.gradle.internal.classloader.ClasspathHasher;
 import org.gradle.internal.classloader.DefaultHashingClassLoaderFactory;
 import org.gradle.internal.concurrent.DefaultExecutorFactory;
 import org.gradle.internal.concurrent.ExecutorFactory;
@@ -197,8 +197,8 @@ public class GlobalScopeServicesTest {
 
     @Test
     public void providesAClasspathSnapshotter() throws Exception {
-        assertThat(registry().get(ClassPathSnapshotter.class), instanceOf(HashClassPathSnapshotter.class));
-        assertThat(longLivingProcessRegistry().get(ClassPathSnapshotter.class), instanceOf(HashClassPathSnapshotter.class));
+        assertThat(registry().get(ClasspathHasher.class), instanceOf(DefaultClasspathHasher.class));
+        assertThat(longLivingProcessRegistry().get(ClasspathHasher.class), instanceOf(DefaultClasspathHasher.class));
     }
 
     @Test

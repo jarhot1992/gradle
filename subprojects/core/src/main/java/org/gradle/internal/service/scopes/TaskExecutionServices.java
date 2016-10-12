@@ -26,8 +26,6 @@ import org.gradle.api.internal.changedetection.changes.ShortCircuitTaskArtifactS
 import org.gradle.api.internal.changedetection.state.CacheBackedFileSnapshotRepository;
 import org.gradle.api.internal.changedetection.state.CacheBackedTaskHistoryRepository;
 import org.gradle.api.internal.changedetection.state.CachingFileHasher;
-import org.gradle.api.internal.changedetection.state.ClasspathSnapshotter;
-import org.gradle.api.internal.changedetection.state.DefaultClasspathSnapshotter;
 import org.gradle.api.internal.changedetection.state.DefaultFileCollectionSnapshotterRegistry;
 import org.gradle.api.internal.changedetection.state.DefaultGenericFileCollectionSnapshotter;
 import org.gradle.api.internal.changedetection.state.DefaultTaskHistoryStore;
@@ -141,12 +139,6 @@ public class TaskExecutionServices {
 
     GenericFileCollectionSnapshotter createGenericFileCollectionSnapshotter(FileHasher hasher, StringInterner stringInterner, FileSystem fileSystem, DirectoryFileTreeFactory directoryFileTreeFactory, ListenerManager listenerManager) {
         DefaultGenericFileCollectionSnapshotter snapshotter = new DefaultGenericFileCollectionSnapshotter(hasher, stringInterner, fileSystem, directoryFileTreeFactory);
-        listenerManager.addListener(snapshotter);
-        return snapshotter;
-    }
-
-    ClasspathSnapshotter createClasspathSnapshotter(FileHasher hasher, StringInterner stringInterner, FileSystem fileSystem, DirectoryFileTreeFactory directoryFileTreeFactory, ListenerManager listenerManager) {
-        DefaultClasspathSnapshotter snapshotter = new DefaultClasspathSnapshotter(hasher, stringInterner, fileSystem, directoryFileTreeFactory);
         listenerManager.addListener(snapshotter);
         return snapshotter;
     }
