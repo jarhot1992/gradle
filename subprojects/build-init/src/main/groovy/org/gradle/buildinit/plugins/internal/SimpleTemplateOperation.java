@@ -17,15 +17,16 @@
 package org.gradle.buildinit.plugins.internal;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Throwables;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import groovy.text.SimpleTemplateEngine;
 import groovy.text.Template;
 import groovy.util.CharsetToolkit;
 import org.apache.commons.io.IOUtils;
+import org.gradle.api.UncheckedIOException;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
 import java.util.Map;
@@ -62,8 +63,10 @@ public class SimpleTemplateOperation implements TemplateOperation {
             } finally {
                 IOUtils.closeQuietly(writer);
             }
-        } catch (Exception ex) {
-            throw Throwables.propagate(ex);
+        } catch (IOException ex) {
+            throw new UncheckedIOException(ex);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
